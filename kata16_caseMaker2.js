@@ -1,86 +1,81 @@
+const  vowels = ['a', 'e', 'i', 'o', 'u'];
+
+const caseFunctions = {
+  camel: (text => {
+    const camelText = text.toLowerCase().split('').map((c, i, a) => {
+      if (c === ' ') {
+        return '';
+      }
+      if (a[i - 1] === ' ') {
+        return c.toUpperCase();
+      }
+      return c;
+    }).join('');
+    return camelText;
+  }),
+  pascal: (text => {
+    const pascalText = text.toLowerCase().split('').map((c, i, a) => {
+      if (c === ' ') {
+        return '';
+      }
+      if (i === 0 || a[i - 1] === ' ') {
+        return c.toUpperCase();
+      }
+      return c;
+    }).join('');
+    return pascalText;
+  }),
+  snake: (text => {
+    let snakeText = text.split('').map(c => {
+      if (c === ' ') {
+        return '_';
+      }
+      return c;
+    }).join('');
+    return snakeText;
+  }),
+  kebab: (text => {
+    return text.split('').map(c => {
+      if (c === ' ') {
+        return '-';
+      }
+      return c;
+    }).join('');
+  }),
+  title: (text => {
+    return text.toLowerCase().split('').map((c, i, a) => {
+      if (i === 0 || a[i - 1] === ' ') {
+        return c.toUpperCase();
+      }
+      return c;
+    }).join('');
+  }),
+  vowel: (text => {
+    return text.toLowerCase().split('').map(c => {
+      if (vowels.includes(c)) {
+        return c.toUpperCase();
+      }
+      return c;
+    }).join('');
+  }),
+  consonant: (text => {
+    return text.toLowerCase().split('').map(c => {
+      if (!vowels.includes(c)) {
+        return c.toUpperCase();
+      }
+      return c;
+    }).join('');
+  }),
+  upper: (text => text.toUpperCase()),
+  lower: (text => text.toLowerCase()),
+};
+
 const makeCase = function(input, caseOption) {
-  if (!Array.isArray(caseOption)) {
-    return eval(caseOption)(input);
+  if (Array.isArray(caseOption)) {
+    return caseOption.reduce((a,b) => caseFunctions[b](a), input);
   }
-  let result = input;
-  caseOption.forEach(x => result = eval(x)(result));
-  return result;
-}
-
-const camel = text => {
-  return text.toLowerCase().split('').map((c, i, a) => {
-    if (c === ' ') {
-      return '';
-    }
-    if (a[i-1] === ' ') {
-      return c.toUpperCase();
-    }
-    return c;
-  }).join('');
+  return caseFunctions[caseOption](input);
 };
-
-const pascal = text => {
-  return text.toLowerCase().split('').map((c, i, a) => {
-    if (c === ' ') {
-      return '';
-    }
-    if (i === 0 || a[i-1] === ' ') {
-      return c.toUpperCase();
-    }
-    return c;
-  }).join('');
-};
-
-const snake = text => {
-  return text.split('').map(c => {
-    if (c === ' ') {
-      return '_';
-    }
-    return c;
-  }).join('');
-};
-
-const kebab = text => {
-  return text.split('').map(c => {
-    if (c === ' ') {
-      return '-';
-    }
-    return c;
-  }).join('');
-};
-
-const title = text => {
-  return text.toLowerCase().split('').map((c, i, a) => {
-    if (i === 0 || a[i-1] === ' ') {
-      return c.toUpperCase();
-    }
-    return c;
-  }).join('');
-};
-
-const vowel = text => {
-  const vowels = ['a', 'e', 'i', 'o', 'u'];
-  return text.toLowerCase().split('').map(c => {
-    if (vowels.includes(c)) {
-      return c.toUpperCase();
-    }
-    return c;
-  }).join('');
-};
-
-const consonant = text => {
-  const vowels = ['a', 'e', 'i', 'o', 'u'];
-  return text.toLowerCase().split('').map(c => {
-    if (!vowels.includes(c)) {
-      return c.toUpperCase();
-    }
-    return c;
-  }).join('');
-};
-
-const upper = text => text.toUpperCase();
-
-const lower = text => text.toLowerCase();
 
 console.log(makeCase("this is a string", "camel"));
 console.log(makeCase("this is a string", "pascal"));
