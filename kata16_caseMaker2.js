@@ -1,5 +1,10 @@
 const makeCase = function(input, caseOption) {
-  return eval(caseOption)(input);
+  if (!Array.isArray(caseOption)) {
+    return eval(caseOption)(input);
+  }
+  let result = input;
+  caseOption.forEach(x => result = eval(x)(result));
+  return result;
 }
 
 const camel = text => {
@@ -86,4 +91,4 @@ console.log(makeCase("this is a string", "vowel"));
 console.log(makeCase("this is a string", "consonant"));
 console.log(makeCase("this is a string", "upper"));
 console.log(makeCase("this is a string", "lower"));
-// console.log(makeCase("this is a string", ["upper", "snake"]));
+console.log(makeCase("this is a string", ["upper", "snake"]));
