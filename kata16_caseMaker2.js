@@ -14,6 +14,18 @@ const camel = text => {
   }).join('');
 };
 
+const pascal = text => {
+  return text.toLowerCase().split('').map((c, i, a) => {
+    if (c === ' ') {
+      return '';
+    }
+    if (i === 0 || a[i-1] === ' ') {
+      return c.toUpperCase();
+    }
+    return c;
+  }).join('');
+};
+
 console.log(makeCase("this is a string", "camel"));
 console.log(makeCase("this is a string", "pascal"));
 // console.log(makeCase("this is a string", "snake"));
