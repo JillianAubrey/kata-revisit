@@ -1,5 +1,4 @@
 const caseFunctions = {
-  vowels: ['a', 'e', 'i', 'o', 'u'],
   _mapString: function(str, func) {
     return str.split('').map(func).join('');
   },
@@ -19,23 +18,8 @@ const caseFunctions = {
     const camelText = this.camel(text);
     return camelText[0].toUpperCase() + camelText.slice(1);
   },
-  snake: function(text) {
-    let snakeText = this._mapString(text, c => {
-      if (c === ' ') {
-        return '_';
-      }
-      return c;
-    });
-    return snakeText;
-  },
-  kebab: function(text) {
-    return this._mapString(text, c => {
-      if (c === ' ') {
-        return '-';
-      }
-      return c;
-    });
-  },
+  snake: text => text.replace(/ /g, '_'),
+  kebab: text => text.replace(/ /g, '-'),
   title: function(text) {
     return this._mapString(text.toLowerCase(), (c, i, a) => {
       if (i === 0 || a[i - 1] === ' ') {
