@@ -1,12 +1,12 @@
-const whereCanIPark = function (spots, vehicle) {
-  let goodSpotTypes = ['R']
+const whereCanIPark = function(spots, vehicle) {
+  let goodSpotTypes = ['R'];
   let result = false;
 
   switch (vehicle) {
-    case 'motorcycle':
-      goodSpotTypes.push('M');
-    case 'small':
-      goodSpotTypes.push('S');
+  case 'motorcycle':
+    goodSpotTypes.push('M');
+  case 'small':
+    goodSpotTypes.push('S');
   }
 
   spots.every((row, y) => {
@@ -17,9 +17,9 @@ const whereCanIPark = function (spots, vehicle) {
         result = [x, y];
       }
       return !result;
-    })
+    });
     return !result;
-  })
+  });
   return result;
 };
 
@@ -57,4 +57,4 @@ console.log(whereCanIPark(
     ['S', 'r', 'S', 'M', 'm', 'S']
   ],
   'motorcycle'
-))
+));

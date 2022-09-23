@@ -1,4 +1,4 @@
-const checkAir = function (samples, threshold) {
+const checkAir = function(samples, threshold) {
   const dirtySamples = samples.reduce((counter,x) => (x === 'dirty' ? counter + 1 : counter), 0);
 
   if (dirtySamples / samples.length < threshold) {
@@ -20,4 +20,4 @@ console.log(checkAir(
 console.log(checkAir(
   ['clean', 'dirty', 'clean', 'dirty', 'clean', 'dirty', 'clean'],
   0.9
-))
+));

@@ -9,7 +9,7 @@ const sumLargestNumbers = function(data) {
     } else if (datum > secondLargest) {
       secondLargest = datum;
     }
-  })
+  });
 
   return largest + secondLargest;
 };

@@ -1,9 +1,9 @@
 const conditionalSum = function(values, condition) {
   const condSum = values.reduce((a, b) => {
-    if (( b % 2 === 0 ? condition === 'even' : condition === 'odd' )) {
+    if ((b % 2 === 0 ? condition === 'even' : condition === 'odd')) {
       return a + b;
     }
-    return a
+    return a;
   }, 0);
 
   return condSum;
