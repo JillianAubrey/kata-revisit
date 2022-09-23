@@ -1,8 +1,10 @@
-const  vowels = ['a', 'e', 'i', 'o', 'u'];
-
 const caseFunctions = {
-  camel: (text => {
-    const camelText = text.toLowerCase().split('').map((c, i, a) => {
+  vowels: ['a', 'e', 'i', 'o', 'u'],
+  _mapString: function(str, func) {
+    return str.split('').map(func).join('');
+  },
+  camel: (function(text) {
+    const camelText = this._mapString(text.toLowerCase(), (c, i, a) => {
       if (c === ' ') {
         return '';
       }
@@ -10,62 +12,56 @@ const caseFunctions = {
         return c.toUpperCase();
       }
       return c;
-    }).join('');
+    });
     return camelText;
   }),
-  pascal: (text => {
-    const pascalText = text.toLowerCase().split('').map((c, i, a) => {
-      if (c === ' ') {
-        return '';
-      }
-      if (i === 0 || a[i - 1] === ' ') {
-        return c.toUpperCase();
-      }
-      return c;
-    }).join('');
-    return pascalText;
-  }),
-  snake: (text => {
-    let snakeText = text.split('').map(c => {
+  pascal: function(text) {
+    const camelText = this.camel(text);
+    return camelText[0].toUpperCase() + camelText.slice(1);
+  },
+  snake: function(text) {
+    let snakeText = this._mapString(text, c => {
       if (c === ' ') {
         return '_';
       }
       return c;
-    }).join('');
+    });
     return snakeText;
-  }),
-  kebab: (text => {
-    return text.split('').map(c => {
+  },
+  kebab: function(text) {
+    return this._mapString(text, c => {
       if (c === ' ') {
         return '-';
       }
       return c;
-    }).join('');
-  }),
-  title: (text => {
-    return text.toLowerCase().split('').map((c, i, a) => {
+    });
+  },
+  title: function(text) {
+    return this._mapString(text.toLowerCase(), (c, i, a) => {
       if (i === 0 || a[i - 1] === ' ') {
         return c.toUpperCase();
       }
       return c;
-    }).join('');
-  }),
-  vowel: (text => {
-    return text.toLowerCase().split('').map(c => {
-      if (vowels.includes(c)) {
+    });
+  },
+  vowel: function(text) {
+    const vowelText = this._mapString(text.toLowerCase(), c => {
+      if (this.vowels.includes(c)) {
         return c.toUpperCase();
       }
       return c;
-    }).join('');
-  }),
-  consonant: (text => {
-    return text.toLowerCase().split('').map(c => {
-      if (!vowels.includes(c)) {
+    });
+    return vowelText;
+  },
+  consonant: function(text) {
+    const consonantText = this._mapString(text.toLowerCase(), c => {
+      if (!this.vowels.includes(c)) {
         return c.toUpperCase();
       }
       return c;
-    }).join('');
-  }),
+    });
+    return consonantText;
+  },
   upper: (text => text.toUpperCase()),
   lower: (text => text.toLowerCase()),
 };
