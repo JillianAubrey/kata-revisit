@@ -2,16 +2,19 @@ const caseFunctions = {
   _mapString: function(str, func) {
     return str.split('').map(func).join('');
   },
+  vowels: ['a', 'e', 'i', 'o', 'u'],
   camel: (function(text) {
-    const camelText = this._mapString(text.toLowerCase(), (c, i, a) => {
-      if (c === ' ') {
-        return '';
+    const camelText = this._mapString(text.toLowerCase().trim(),
+      (c, i, a) => {
+        if (c === ' ') {
+          return '';
+        }
+        if (a[i - 1] === ' ') {
+          return c.toUpperCase();
+        }
+        return c;
       }
-      if (a[i - 1] === ' ') {
-        return c.toUpperCase();
-      }
-      return c;
-    });
+    );
     return camelText;
   }),
   pascal: function(text) {
@@ -29,20 +32,18 @@ const caseFunctions = {
     });
   },
   vowel: function(text) {
-    const vowelText = this._mapString(text.toLowerCase(), c => {
-      if (this.vowels.includes(c)) {
-        return c.toUpperCase();
-      }
-      return c;
+    let vowelText = text.toLowerCase();
+    this.vowels.forEach(vowel => {
+      const regex = new RegExp(vowel, 'g');
+      vowelText = vowelText.replace(regex, vowel.toUpperCase());
     });
     return vowelText;
   },
   consonant: function(text) {
-    const consonantText = this._mapString(text.toLowerCase(), c => {
-      if (!this.vowels.includes(c)) {
-        return c.toUpperCase();
-      }
-      return c;
+    let consonantText = text.toUpperCase();
+    this.vowels.forEach(vowel => {
+      const regex = new RegExp(vowel.toUpperCase(), 'g');
+      consonantText = consonantText.replace(regex, vowel);
     });
     return consonantText;
   },
