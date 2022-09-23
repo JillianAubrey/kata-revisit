@@ -46,8 +46,8 @@ const caseFunctions = {
     });
     return consonantText;
   },
-  upper: (text => text.toUpperCase()),
-  lower: (text => text.toLowerCase()),
+  upper: text => text.toUpperCase(),
+  lower: text => text.toLowerCase(),
 };
 
 const makeCase = function(input, caseOption) {
