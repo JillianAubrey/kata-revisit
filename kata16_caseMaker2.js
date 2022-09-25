@@ -4,18 +4,17 @@ const caseFunctions = {
   },
   vowels: ['a', 'e', 'i', 'o', 'u'],
   camel: (function(text) {
-    const camelText = this._mapString(text.toLowerCase().trim(),
-      (c, i, a) => {
-        if (c === ' ') {
-          return '';
-        }
-        if (a[i - 1] === ' ') {
-          return c.toUpperCase();
-        }
-        return c;
+    const mapFunction = (c, i, a) => {
+      if (c === ' ') {
+        return '';
       }
-    );
-    return camelText;
+      if (a[i - 1] === ' ') {
+        return c.toUpperCase();
+      }
+      return c;
+    }
+
+    return this._mapString(text.toLowerCase().trim(), mapFunction);
   }),
   pascal: function(text) {
     const camelText = this.camel(text);
@@ -24,12 +23,13 @@ const caseFunctions = {
   snake: text => text.replace(/ /g, '_'),
   kebab: text => text.replace(/ /g, '-'),
   title: function(text) {
-    return this._mapString(text.toLowerCase(), (c, i, a) => {
+    const mapFunction = (c, i, a) => {
       if (i === 0 || a[i - 1] === ' ') {
         return c.toUpperCase();
       }
       return c;
-    });
+    }
+    return this._mapString(text.toLowerCase(), mapFunction);
   },
   vowel: function(text) {
     let vowelText = text.toLowerCase();
