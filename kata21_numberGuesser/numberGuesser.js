@@ -21,10 +21,43 @@ const getMaxNumber = function (){
 
 const numberGuesser = function() {
   const maxNum = getMaxNumber();
-  let input;
+  let guess;
+  let guesses = [];
   let answer = Math.ceil(Math.random() * maxNum);
 
   console.log('answer:', answer);
+
+  do {
+    console.log(`Guess a number between 1 and ${maxNum}:`)
+    guess = Number(screenInputForStop());
+
+    if (isNaN(guess)) {
+      console.log('You have to guess a number!');
+      continue;
+    }
+    if (guesses.includes(guess)) {
+      console.log(`You've already guessed ${guess}!`);
+      continue;
+    }
+    if (guess < 1 || guess > maxNum) {
+      console.log(`${guess} isn't in range!`);
+      continue;
+    }
+    guesses.push(guess);
+    if (guess > answer) {
+      console.log('Too high!')
+      continue;
+    }
+    if (guess < answer) {
+      console.log('Too low!')
+    }
+  } while (guess !== answer);
+
+  if (guesses.length === 1) {
+    console.log('You got it first try!');
+  } else {
+    console.log(`You got it in ${guesses.length} tries!`);
+  }
 }
 
 
