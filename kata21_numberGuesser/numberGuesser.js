@@ -4,20 +4,20 @@ const screenInputForStop = function(userPrompt = '> ') {
   const input = prompt(userPrompt).toLowerCase();
   if (input.search('stop') > -1) {
     console.log('Game stopped');
-    process.exit()
+    process.exit();
   }
   return input;
-}
+};
 
-const getMaxNumber = function (){
+const getMaxNumber = function() {
   let maxNum;
-  console.log("What would you like the maximum number to be?")
+  console.log("What would you like the maximum number to be?");
   do {
-    console.log("It must be a positive integer greater than 1.")
+    console.log("It must be a positive integer greater than 1.");
     maxNum = Number(screenInputForStop());
   } while (maxNum <= 1 || !Number.isInteger(maxNum));
   return maxNum;
-}
+};
 
 const numberGuesser = function() {
   const maxNum = getMaxNumber();
@@ -25,10 +25,8 @@ const numberGuesser = function() {
   let guesses = [];
   let answer = Math.ceil(Math.random() * maxNum);
 
-  console.log('answer:', answer);
-
   do {
-    console.log(`Guess a number between 1 and ${maxNum}:`)
+    console.log(`Guess a number between 1 and ${maxNum}:`);
     guess = Number(screenInputForStop());
 
     if (isNaN(guess)) {
@@ -45,11 +43,11 @@ const numberGuesser = function() {
     }
     guesses.push(guess);
     if (guess > answer) {
-      console.log('Too high!')
+      console.log('Too high!');
       continue;
     }
     if (guess < answer) {
-      console.log('Too low!')
+      console.log('Too low!');
     }
   } while (guess !== answer);
 
@@ -58,7 +56,15 @@ const numberGuesser = function() {
   } else {
     console.log(`You got it in ${guesses.length} tries!`);
   }
-}
+
+  console.log('Would you like to play again? (Y/N)');
+  const playAgain = screenInputForStop().toLowerCase().trim();
+  if (playAgain === 'n' || playAgain === 'no') {
+    console.log('Thanks for playing!');
+    process.exit();
+  }
+  numberGuesser();
+};
 
 
 console.log("Welcome to number guesser!");
